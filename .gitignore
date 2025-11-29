@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# Gradio
+.gradio/
+
+# Temp folders
+temp_imagen*
+*temp_imagen*
+*/temp_imagen*
+
+# Reports
+*.pdf
+
+# System
+.DS_Store
+Thumbs.db
+
+# Temp image analysis folders
+temp_imagen con analisis
+*/temp_imagen con analisis
+*temp_imagen con analisis*
