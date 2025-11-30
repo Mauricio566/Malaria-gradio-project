@@ -154,6 +154,8 @@ with gr.Blocks(
     
     # Header
     gr.Markdown("# 🔬 Sistema De Detección De Malaria")
+    gr.Markdown("### Autor: Yorman Mauricio <3")
+
     
     # API Status
     with gr.Row():
