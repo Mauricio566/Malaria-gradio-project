@@ -76,9 +76,9 @@ def create_simple_report(prediction_data, filename):
     os.makedirs("reports", exist_ok=True) 
     # Guardar PDF
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    #pdf_path = f"reports/reporte_{timestamp}.pdf"
+    pdf_path = f"reports\\reporte_{timestamp}.pdf"
 
-    pdf_path = f"python\\malaria_clasification\\src\\reports\\reporte_{timestamp}.pdf"
+    #pdf_path = f"python\\malaria_clasification\\src\\reports\\reporte_{timestamp}.pdf"
     pdf.output(pdf_path)    
     
     return pdf_path

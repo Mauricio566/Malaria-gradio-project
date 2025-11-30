@@ -57,6 +57,6 @@ EXPOSE 7860
 # -------------------------------------------------
 # Comando para levantar la API con Uvicorn
 # -------------------------------------------------
-#CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT}"]
-#CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT} & python gradio_app.py & wait"]
-CMD ["sh", "-c", "uvicorn inference.main:app --host 0.0.0.0 --port ${PORT} & python ui/gradio_app.py & wait"]
+
+#CMD ["sh", "-c", "uvicorn inference.main:app --host 0.0.0.0 --port ${PORT} & python ui/gradio_app.py & wait"]
+CMD ["uvicorn", "inference.main:app", "--host", "0.0.0.0", "--port", "8000"]

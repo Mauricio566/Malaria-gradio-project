@@ -13,6 +13,8 @@ import sys
 import os
 
 #sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ui'))
+
 
 from pdf.pdf_generator import generate_pdf
 from architecture.model_architecture import create_model
@@ -142,6 +144,15 @@ async def health_check(): # and this and automatically creates a button and so o
             "gradcam_enabled": True
             }
 
+def process_prediction_internal(image_bytes, filename="image.png"):
+    """Función interna sin FastAPI para procesar predicción"""
+    result = predict_image_from_bytes(image_bytes, model, include_gradcam=True)
+    pdf_path = generate_pdf(result, filename)
+    result["pdf_path"] = pdf_path
+    #print(result)
+    return result
+
+
 #we are going to send an image
 @app.post("/predict")
 async def predict_malaria(file: UploadFile = File(...)):#=File(...): Tells FastAPI "expect a required file"
@@ -162,9 +173,11 @@ async def predict_malaria(file: UploadFile = File(...)):#=File(...): Tells FastA
     
     # Make prediction
     #result = predict_image_from_bytes(image_bytes, model)
-    result = predict_image_from_bytes(image_bytes,model,include_gradcam=True)
+    """result = predict_image_from_bytes(image_bytes,model,include_gradcam=True)
     pdf_path = generate_pdf(result, file.filename)
-    result["pdf_path"] = pdf_path 
+    result["pdf_path"] = pdf_path """
+
+    result = process_prediction_internal(image_bytes, file.filename)
     
     return JSONResponse(
         content={
@@ -173,6 +186,13 @@ async def predict_malaria(file: UploadFile = File(...)):#=File(...): Tells FastA
             "status": "success"
         }
     )
+
+import gradio as gr
+from ui.gradio_app import demo
+
+# Montar Gradio en FastAPI
+#app = gr.mount_gradio_app(app, demo, path="/")
+app = gr.mount_gradio_app(app, demo, path="/gradio")
 
 # Run with: uvicorn main:app --reload
 #cd D:\malaria_inference_project\python\malaria_clasification\src
